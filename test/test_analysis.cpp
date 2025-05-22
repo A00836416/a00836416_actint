@@ -129,13 +129,6 @@ TEST(CommonSubstringTest, NoUpdateMaxLen)
     EXPECT_EQ(result.second, 0);
 }
 
-TEST(FileReaderTest, ThrowsIfFileNotFound)
-{
-    EXPECT_THROW(
-        read_file_content("definitely_this_file_does_not_exist_123456.txt"),
-        std::runtime_error);
-}
-
 TEST(CommonSubstringTest, MatchWithoutUpdatingMaxLen)
 {
     std::string a = "aaa";
@@ -152,4 +145,30 @@ TEST(CommonSubstringTest, EqualLengthNoUpdate)
     auto result = longest_common_substring(a, b);
     EXPECT_EQ(result.first, 1);
     EXPECT_EQ(result.second, 3);
+}
+
+TEST(FileReaderTest, ThrowsIfFileNotFound)
+{
+    const std::string filename = "definitely_this_file_does_not_exist_123456.txt";
+    std::remove(filename.c_str()); // Elimina si existe accidentalmente
+
+    EXPECT_THROW(read_file_content(filename), std::runtime_error);
+}
+
+TEST(CommonSubstringTest, DiagonalDPMatrixUsage)
+{
+    std::string a = "abcde12345";
+    std::string b = "xyz12345uvw";
+    auto result = longest_common_substring(a, b);
+    EXPECT_EQ(result.first, 6);
+    EXPECT_EQ(result.second, 10);
+}
+
+TEST(CommonSubstringTest, DiagonalUnequalLength)
+{
+    std::string a = "abcdef123";
+    std::string b = "123";
+    auto result = longest_common_substring(a, b);
+    EXPECT_EQ(result.first, 7);
+    EXPECT_EQ(result.second, 9);
 }
