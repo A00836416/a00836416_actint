@@ -1,6 +1,6 @@
 /*
  * SonarQube, open source software quality management tool.
- * Copyright (C) 2025 Tec de Monterrey
+ * Copyright (C) 2008-2013 SonarSource
  * http://github.com/SonarOpenCommunity/sonar-cxx
  *
  * SonarQube is free software; you can redistribute it and/or
