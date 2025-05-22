@@ -47,10 +47,9 @@ TEST(CommonSubstringTest, HasCommon)
 
 TEST(FileReaderTest, ReadsCorrectContent)
 {
-    const std::string filename = "test_file.txt";
-    const std::string expected_content = "Hola mundo\nEsta es una prueba.";
+    const std::string filename = "test_read_ok.txt";
+    const std::string expected_content = "Contenido válido";
     std::ofstream test_file(filename);
-    ASSERT_TRUE(test_file.is_open());
     test_file << expected_content;
     test_file.close();
     std::string result = read_file_content(filename);
@@ -147,14 +146,6 @@ TEST(CommonSubstringTest, EqualLengthNoUpdate)
     EXPECT_EQ(result.second, 3);
 }
 
-TEST(FileReaderTest, ThrowsIfFileNotFound)
-{
-    const std::string filename = "definitely_this_file_does_not_exist_123456.txt";
-    std::remove(filename.c_str()); // Elimina si existe accidentalmente
-
-    EXPECT_THROW(read_file_content(filename), std::runtime_error);
-}
-
 TEST(CommonSubstringTest, DiagonalDPMatrixUsage)
 {
     std::string a = "abcde12345";
@@ -171,4 +162,31 @@ TEST(CommonSubstringTest, DiagonalUnequalLength)
     auto result = longest_common_substring(a, b);
     EXPECT_EQ(result.first, 7);
     EXPECT_EQ(result.second, 9);
+}
+
+TEST(FileReaderTest, ThrowsIfFileNotFound)
+{
+    try
+    {
+        read_file_content("archivo_que_no_existe_123.txt");
+        FAIL() << "Se esperaba std::runtime_error";
+    }
+    catch (const std::runtime_error &e)
+    {
+        std::string msg = e.what();
+        EXPECT_NE(msg.find("No se pudo abrir el archivo"), std::string::npos);
+    }
+    catch (...)
+    {
+        FAIL() << "Excepción inesperada";
+    }
+}
+
+TEST(CommonSubstringTest, MatchWithoutUpdatingMaxLenMultipleTimes)
+{
+    std::string a = "abcabc";
+    std::string b = "abcabc";
+    auto result = longest_common_substring(a, b);
+    EXPECT_EQ(result.first, 1);
+    EXPECT_EQ(result.second, 6);
 }
