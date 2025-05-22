@@ -96,3 +96,30 @@ TEST(CommonSubstringTest, UnequalLength)
     EXPECT_EQ(result.first, 1);
     EXPECT_EQ(result.second, 3);
 }
+
+TEST(CommonSubstringTest, OneEmptyString)
+{
+    std::string a = "abcde";
+    std::string b = "";
+    auto result = longest_common_substring(a, b);
+    EXPECT_EQ(result.first, 1);
+    EXPECT_EQ(result.second, 0);
+}
+
+TEST(CommonSubstringTest, BothEmptyStrings)
+{
+    std::string a = "";
+    std::string b = "";
+    auto result = longest_common_substring(a, b);
+    EXPECT_EQ(result.first, 1);
+    EXPECT_EQ(result.second, 0);
+}
+
+TEST(CommonSubstringTest, NoCommonSubstring)
+{
+    std::string a = "abc";
+    std::string b = "xyz";
+    auto result = longest_common_substring(a, b);
+    EXPECT_EQ(result.first, 1);
+    EXPECT_EQ(result.second, 0); // porque no hay coincidencia
+}
