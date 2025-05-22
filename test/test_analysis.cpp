@@ -58,19 +58,6 @@ TEST(FileReaderTest, ReadsCorrectContent)
     std::remove(filename.c_str());
 }
 
-TEST(FileReaderTest, ThrowsIfFileNotFound)
-{
-    try
-    {
-        read_file_content("nope.txt");
-        FAIL();
-    }
-    catch (const std::runtime_error &)
-    {
-        SUCCEED();
-    }
-}
-
 TEST(PalindromeTest, EmptyString)
 {
     std::string text = "";
@@ -121,5 +108,41 @@ TEST(CommonSubstringTest, NoCommonSubstring)
     std::string b = "xyz";
     auto result = longest_common_substring(a, b);
     EXPECT_EQ(result.first, 1);
-    EXPECT_EQ(result.second, 0); // porque no hay coincidencia
+    EXPECT_EQ(result.second, 0);
+}
+
+TEST(FileReaderTest, ThrowsIfFileNotFound)
+{
+    try
+    {
+        read_file_content("nope.txt");
+        FAIL() << "Se esperaba std::runtime_error";
+    }
+    catch (const std::runtime_error &e)
+    {
+        std::string msg = e.what();
+        EXPECT_NE(msg.find("No se pudo abrir el archivo"), std::string::npos);
+    }
+    catch (...)
+    {
+        FAIL() << "Excepción inesperada";
+    }
+}
+
+TEST(CommonSubstringTest, OneStringEmptyMatrixEdgeCase)
+{
+    std::string a = "abcde";
+    std::string b = "";
+    auto result = longest_common_substring(a, b);
+    EXPECT_EQ(result.first, 1);
+    EXPECT_EQ(result.second, 0);
+}
+
+TEST(CommonSubstringTest, NoUpdateMaxLen)
+{
+    std::string a = "abc";
+    std::string b = "xyz";
+    auto result = longest_common_substring(a, b);
+    EXPECT_EQ(result.first, 1);
+    EXPECT_EQ(result.second, 0);
 }
