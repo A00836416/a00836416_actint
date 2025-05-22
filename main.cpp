@@ -7,28 +7,28 @@ using namespace std;
 
 int main()
 {
-    string transmission1 = readFileContent("a00836416_actint/mcode1.txt");
-    string transmission2 = readFileContent("a00836416_actint/mcode2.txt");
+    string transmission1 = read_file_content("a00836416_actint/mcode1.txt");
+    string transmission2 = read_file_content("a00836416_actint/mcode2.txt");
     vector<string> mcodes = {
-        readFileContent("a00836416_actint/mcode1.txt"),
-        readFileContent("a00836416_actint/mcode2.txt"),
-        readFileContent("a00836416_actint/mcode3.txt")};
+        read_file_content("a00836416_actint/mcode1.txt"),
+        read_file_content("a00836416_actint/mcode2.txt"),
+        read_file_content("a00836416_actint/mcode3.txt")};
 
     cout << "Parte 1:" << endl;
     for (int i = 0; i < 3; i++)
     {
-        auto result1 = containsPattern(transmission1, mcodes[i]);
+        auto result1 = contains_pattern(transmission1, mcodes[i]);
         cout << (result1.first ? "true " + to_string(result1.second) : "false") << endl;
     }
     for (int i = 0; i < 3; i++)
     {
-        auto result2 = containsPattern(transmission2, mcodes[i]);
+        auto result2 = contains_pattern(transmission2, mcodes[i]);
         cout << (result2.first ? "true " + to_string(result2.second) : "false") << endl;
     }
 
     cout << "Parte 2:" << endl;
-    auto palindrome1 = longestPalindrome(transmission1);
-    auto palindrome2 = longestPalindrome(transmission2);
+    auto palindrome1 = longest_palindrome(transmission1);
+    auto palindrome2 = longest_palindrome(transmission2);
 
     string palindrome1_text = transmission1.substr(palindrome1.first - 1, palindrome1.second - palindrome1.first + 1);
     palindrome1_text.erase(remove(palindrome1_text.begin(), palindrome1_text.end(), '\n'), palindrome1_text.end());
@@ -39,7 +39,7 @@ int main()
     cout << palindrome2.first << " " << palindrome2.second << " " << palindrome2_text << endl;
 
     cout << "Parte 3:" << endl;
-    auto commonSubstring = longestCommonSubstring(transmission1, transmission2);
+    auto commonSubstring = longest_common_substring(transmission1, transmission2);
 
     string common_text = transmission1.substr(commonSubstring.first - 1, commonSubstring.second - commonSubstring.first + 1);
     common_text.erase(remove(common_text.begin(), common_text.end(), '\n'), common_text.end());
