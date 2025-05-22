@@ -1,4 +1,5 @@
 #include <gtest/gtest.h>
+#include <fstream>
 #include "analysis.h"
 
 TEST(PatternTest, Found)
