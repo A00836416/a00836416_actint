@@ -60,5 +60,39 @@ TEST(FileReaderTest, ReadsCorrectContent)
 
 TEST(FileReaderTest, ThrowsIfFileNotFound)
 {
-    EXPECT_THROW(read_file_content("archivo_inexistente.txt"), std::runtime_error);
+    try
+    {
+        read_file_content("nope.txt");
+        FAIL();
+    }
+    catch (const std::runtime_error &)
+    {
+        SUCCEED();
+    }
+}
+
+TEST(PalindromeTest, EmptyString)
+{
+    std::string text = "";
+    auto result = longest_palindrome(text);
+    EXPECT_EQ(result.first, 1);
+    EXPECT_EQ(result.second, 1);
+}
+
+TEST(CommonSubstringTest, FullMatch)
+{
+    std::string a = "abcdef";
+    std::string b = "abcdef";
+    auto result = longest_common_substring(a, b);
+    EXPECT_EQ(result.first, 1);
+    EXPECT_EQ(result.second, 6);
+}
+
+TEST(CommonSubstringTest, UnequalLength)
+{
+    std::string a = "abc";
+    std::string b = "abcdefg";
+    auto result = longest_common_substring(a, b);
+    EXPECT_EQ(result.first, 1);
+    EXPECT_EQ(result.second, 3);
 }
