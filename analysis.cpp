@@ -21,11 +21,9 @@ using namespace std;
 
 string read_file_content(const string &filename)
 {
-    ifstream file;
-    file.open(filename);
-    if (!file.is_open())
+    ifstream file(filename);
+    if (!file)
         throw runtime_error("No se pudo abrir el archivo: " + filename);
-
     return string((istreambuf_iterator<char>(file)), istreambuf_iterator<char>());
 }
 

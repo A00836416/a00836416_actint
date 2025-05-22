@@ -111,11 +111,6 @@ TEST(CommonSubstringTest, NoCommonSubstring)
     EXPECT_EQ(result.second, 0);
 }
 
-TEST(FileReaderTest, ThrowsIfFileNotFound)
-{
-    EXPECT_THROW(read_file_content("nope.txt"), std::runtime_error);
-}
-
 TEST(CommonSubstringTest, OneStringEmptyMatrixEdgeCase)
 {
     std::string a = "abcde";
@@ -132,4 +127,29 @@ TEST(CommonSubstringTest, NoUpdateMaxLen)
     auto result = longest_common_substring(a, b);
     EXPECT_EQ(result.first, 1);
     EXPECT_EQ(result.second, 0);
+}
+
+TEST(FileReaderTest, ThrowsIfFileNotFound)
+{
+    EXPECT_THROW(
+        read_file_content("definitely_this_file_does_not_exist_123456.txt"),
+        std::runtime_error);
+}
+
+TEST(CommonSubstringTest, MatchWithoutUpdatingMaxLen)
+{
+    std::string a = "aaa";
+    std::string b = "aa";
+    auto result = longest_common_substring(a, b);
+    EXPECT_EQ(result.first, 1);
+    EXPECT_EQ(result.second, 2);
+}
+
+TEST(CommonSubstringTest, EqualLengthNoUpdate)
+{
+    std::string a = "abcabc";
+    std::string b = "abcxyz";
+    auto result = longest_common_substring(a, b);
+    EXPECT_EQ(result.first, 1);
+    EXPECT_EQ(result.second, 3);
 }
