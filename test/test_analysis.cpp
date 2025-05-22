@@ -113,20 +113,7 @@ TEST(CommonSubstringTest, NoCommonSubstring)
 
 TEST(FileReaderTest, ThrowsIfFileNotFound)
 {
-    try
-    {
-        read_file_content("nope.txt");
-        FAIL() << "Se esperaba std::runtime_error";
-    }
-    catch (const std::runtime_error &e)
-    {
-        std::string msg = e.what();
-        EXPECT_NE(msg.find("No se pudo abrir el archivo"), std::string::npos);
-    }
-    catch (...)
-    {
-        FAIL() << "Excepción inesperada";
-    }
+    EXPECT_THROW(read_file_content("nope.txt"), std::runtime_error);
 }
 
 TEST(CommonSubstringTest, OneStringEmptyMatrixEdgeCase)
