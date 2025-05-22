@@ -21,14 +21,10 @@ using namespace std;
 
 string read_file_content(const string &filename)
 {
-    auto open = [&]() -> ifstream
-    {
-        ifstream f(filename);
-        if (!f)
-            throw runtime_error("No se pudo abrir el archivo: " + filename);
-        return f;
-    };
-    ifstream file = open();
+    ifstream file(filename);
+    if (!file)
+        throw runtime_error("No se pudo abrir el archivo: " + filename);
+
     return string((istreambuf_iterator<char>(file)), istreambuf_iterator<char>());
 }
 
