@@ -23,10 +23,8 @@ string read_file_content(const string &filename)
 {
     ifstream file(filename);
     if (!file)
-    {
-        cerr << "Error al abrir el archivo: " << filename << endl;
-        exit(1);
-    }
+        throw runtime_error("No se pudo abrir el archivo: " + filename);
+
     return string((istreambuf_iterator<char>(file)), istreambuf_iterator<char>());
 }
 

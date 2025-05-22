@@ -43,3 +43,21 @@ TEST(CommonSubstringTest, HasCommon)
     EXPECT_EQ(result.first, 3);
     EXPECT_EQ(result.second, 5);
 }
+
+TEST(FileReaderTest, ReadsCorrectContent)
+{
+    const std::string filename = "test_file.txt";
+    const std::string expected_content = "Hola mundo\nEsta es una prueba.";
+    std::ofstream test_file(filename);
+    ASSERT_TRUE(test_file.is_open());
+    test_file << expected_content;
+    test_file.close();
+    std::string result = read_file_content(filename);
+    EXPECT_EQ(result, expected_content);
+    std::remove(filename.c_str());
+}
+
+TEST(FileReaderTest, ThrowsIfFileNotFound)
+{
+    EXPECT_THROW(read_file_content("archivo_inexistente.txt"), std::runtime_error);
+}
